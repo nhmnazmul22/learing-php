@@ -1,0 +1,17 @@
+{
+    "name": "nhmnazmul/composer",
+    "autoload": {
+        "psr-4": {
+            "Nhmnazmul\\Composer\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "nhmnazmul22",
+            "email": "najmulmonir12345@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^7.10"
+    }
+}
