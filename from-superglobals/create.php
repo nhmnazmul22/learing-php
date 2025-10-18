@@ -1,19 +1,49 @@
 <?php
-echo "<pre>";
-var_dump($_POST);
-echo "</pre>";
-echo "<br>";
-echo "<pre>";
-var_dump($_FILES);
-echo "</pre>";
+// echo "<pre>";
+// var_dump($_POST);
+// echo "</pre>";
+// echo "<br>";
+// echo "<pre>";
+// var_dump($_FILES);
+// echo "</pre>";
+
+$uploadDir = "uploads/";
+$contactsFile = "contact.json";
+
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_SPECIAL_CHARS);
     $email = filter_input(INPUT_POST, "email", FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
 
-    if ($name && $email && $password) {
-        echo "Contact added: $name ($email, $password)";
+    if ($name && $email && $password && isset($_FILES["image"])) {
+
+        // Ensure the uploads directory exists
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir, 0777, true);
+        }
+        $imageName = time() . "_" . basename($_FILES["image"]["name"]);
+        $imagePath = $uploadDir . $imageName;
+
+        if (move_uploaded_file($_FILES["image"]["tmp_name"], $imagePath)) {
+            $contacts = file_exists($contactsFile) ? json_decode(file_get_contents($contactsFile)) : [];
+
+
+            $contacts[] = [
+                "id" => rand(100000000, 200000000),
+                "name" => $name,
+                "email" => $email,
+                "password" => hash("sha256", $password),
+                "image" => $imagePath
+            ];
+
+
+            file_put_contents($contactsFile, json_encode($contacts, JSON_PRETTY_PRINT));
+
+            echo "Contact added: $name ($email)";
+        } else {
+            echo "Image upload Failed";
+        }
 
     } else {
         echo "Invalid input";
