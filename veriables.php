@@ -26,14 +26,14 @@ echo "<h1> Hello, {$name} </h1>";
 echo "Hello, " . $name . "<br>";
 echo "Age: " . $age . "<br>";
 echo "isTrue:" . $isTrue . "<br>";
-echo "isFalse:" , $isFalse ,"<br>";
-echo "total:" , $total ,"<br>";
-echo "salary:", $salary ,"<br>";
+echo "isFalse:", $isFalse, "<br>";
+echo "total:", $total, "<br>";
+echo "salary:", $salary, "<br>";
 
 echo "<br>" . "<br>" . "<br>";
 
 // Get the variables types
-echo gettype($name)."<br>";
+echo gettype($name) . "<br>";
 echo gettype($age) . "<br>";
 echo gettype($isTrue) . "<br>";
 echo gettype($isFalse) . "<br>";
@@ -66,9 +66,9 @@ var_dump(is_int($age));
 echo "<br>";
 var_dump(is_double($total));
 echo "<br>";
-var_dump( is_null($salary));
+var_dump(is_null($salary));
 echo "<br>";
-var_dump( $salary === null);
+var_dump($salary === null);
 echo "<br>";
 var_dump(is_array($numbers));
 echo "<br>";
@@ -84,4 +84,31 @@ echo "<br>";
 
 echo "<br>" . "<br>" . "<br>";
 echo "<br>" . "<br>" . "<br>";
-echo "<br>" . "<br>" . "<br>";
+
+
+$num = 5;
+var_dump($num);
+
+function testing()
+{
+    global $num;
+    echo "<pre>";
+    // var_dump($GLOBALS);
+    echo "</pre>";
+    echo $num;
+}
+
+echo testing();
+
+echo "<br>";
+
+function myTest()
+{
+    static $x = 0;
+    echo $x;
+    $x++;
+}
+
+myTest();
+myTest();
+myTest();
